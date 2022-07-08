@@ -103,14 +103,14 @@ stress_test_multivariate_normal_distribution <- function(.num_assets = 5, .sampl
   names <- c("Location", "Dispersion")
   for (i in seq_along(plots)) {
 
-    p1 <- data_plots[[i]][[1]] %>%
-      as.data.frame() %>%
-      tibble::as_tibble() %>%
-      `colnames<-`(factor(Thetas)) %>%
-      tidyr::pivot_longer(cols = dplyr::everything()) %>%
-      dplyr::mutate_if(is.character, as.numeric) %>%
-      dplyr::mutate(name = scales::percent(.data$name)) %>%
-      dplyr::mutate_if(is.character, as.factor) %>%
+    p1 <- data_plots[[i]][[1]] |>
+      as.data.frame() |>
+      tibble::as_tibble() |>
+      `colnames<-`(factor(Thetas)) |>
+      tidyr::pivot_longer(cols = dplyr::everything()) |>
+      dplyr::mutate_if(is.character, as.numeric) |>
+      dplyr::mutate(name = scales::percent(.data$name)) |>
+      dplyr::mutate_if(is.character, as.factor) |>
       ggplot2::ggplot(ggplot2::aes(x = .data$value, y = .data$name)) +
       ggridges::geom_density_ridges(scale = 1, stat = "binline", bins = 100, fill = "#03333e") +
       ggplot2::scale_x_continuous(labels = scales::percent_format(accuracy = 0.01)) +
@@ -121,10 +121,10 @@ stress_test_multivariate_normal_distribution <- function(.num_assets = 5, .sampl
 
     p2 <- tibble::tibble(Correlations = Thetas,
                          Bias         = as.vector(data_plots[[i]][[2]]),
-                         Inefficiency = as.vector(data_plots[[i]][[3]])) %>%
-      tidyr::pivot_longer(cols = -.data$Correlations) %>%
-      dplyr::mutate(Correlations = scales::percent(.data$Correlations)) %>%
-      dplyr::mutate_if(is.character, as.factor) %>%
+                         Inefficiency = as.vector(data_plots[[i]][[3]])) |>
+      tidyr::pivot_longer(cols = -.data$Correlations) |>
+      dplyr::mutate(Correlations = scales::percent(.data$Correlations)) |>
+      dplyr::mutate_if(is.character, as.factor) |>
       ggplot2::ggplot(ggplot2::aes(x = .data$Correlations, y = .data$value, fill = .data$name)) +
       ggplot2::geom_col() +
       ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 0.01)) +

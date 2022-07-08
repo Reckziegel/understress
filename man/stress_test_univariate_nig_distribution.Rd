@@ -6,6 +6,7 @@
 \alias{stress_test_univariate_nig_distribution.tbl}
 \alias{stress_test_univariate_nig_distribution.xts}
 \alias{stress_test_univariate_nig_distribution.matrix}
+\alias{stress_test_univariate_nig_distribution.numeric}
 \title{Stress-Test the Normal-Inverse Gaussian Distribution}
 \usage{
 stress_test_univariate_nig_distribution(
@@ -37,6 +38,13 @@ stress_test_univariate_nig_distribution(
 )
 
 \method{stress_test_univariate_nig_distribution}{matrix}(
+  .invariant,
+  .what = c("mu", "sigma", "alpha", "skew"),
+  .simulations = 300,
+  .symmetric = FALSE
+)
+
+\method{stress_test_univariate_nig_distribution}{numeric}(
   .invariant,
   .what = c("mu", "sigma", "alpha", "skew"),
   .simulations = 300,

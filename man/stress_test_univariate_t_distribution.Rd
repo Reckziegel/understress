@@ -6,6 +6,7 @@
 \alias{stress_test_univariate_t_distribution.tbl}
 \alias{stress_test_univariate_t_distribution.xts}
 \alias{stress_test_univariate_t_distribution.matrix}
+\alias{stress_test_univariate_t_distribution.numeric}
 \title{Stress-Test the Student-t Distribution}
 \usage{
 stress_test_univariate_t_distribution(
@@ -37,6 +38,13 @@ stress_test_univariate_t_distribution(
 )
 
 \method{stress_test_univariate_t_distribution}{matrix}(
+  .invariant,
+  .what = c("mu", "sigma", "nu", "skew"),
+  .simulations = 300,
+  .symmetric = FALSE
+)
+
+\method{stress_test_univariate_t_distribution}{numeric}(
   .invariant,
   .what = c("mu", "sigma", "nu", "skew"),
   .simulations = 300,

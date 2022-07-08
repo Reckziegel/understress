@@ -24,14 +24,14 @@ stress_test_univariate_t_distribution <- function(.invariant, .what = c("mu", "s
 #' @rdname stress_test_univariate_t_distribution
 #' @export
 stress_test_univariate_t_distribution.default <- function(.invariant, .what = c("mu", "sigma", "nu", "skew"), .simulations = 300, .symmetric = FALSE) {
-  stop(".invariant must be a tibble, xts or a matrix.", call. = FALSE)
+  rlang::abort(".invariant must be a tibble, xts or a matrix.")
 }
 
 #' @rdname stress_test_univariate_t_distribution
 #' @export
 stress_test_univariate_t_distribution.tbl <- function(.invariant, .what = c("mu", "sigma", "nu", "skew"), .simulations = 300, .symmetric = FALSE) {
   if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-    .invariant <- .invariant %>%
+    .invariant <- .invariant |>
       timetk::tk_xts(silent = TRUE)
     .invariant <- matrix(.invariant, nrow = nrow(.invariant), ncol = ncol(.invariant))
   } else {
@@ -49,6 +49,12 @@ stress_test_univariate_t_distribution.xts <- function(.invariant, .what = c("mu"
 #' @rdname stress_test_univariate_t_distribution
 #' @export
 stress_test_univariate_t_distribution.matrix <- function(.invariant, .what = c("mu", "sigma", "nu", "skew"), .simulations = 300, .symmetric = FALSE) {
+  stress_test_univariate_t_distribution_(.invariant = .invariant, .what = .what, .simulations = .simulations, .symmetric = .symmetric)
+}
+
+#' @rdname stress_test_univariate_t_distribution
+#' @export
+stress_test_univariate_t_distribution.numeric <- function(.invariant, .what = c("mu", "sigma", "nu", "skew"), .simulations = 300, .symmetric = FALSE) {
   stress_test_univariate_t_distribution_(.invariant = .invariant, .what = .what, .simulations = .simulations, .symmetric = .symmetric)
 }
 
@@ -205,14 +211,14 @@ stress_test_univariate_t_distribution_ <- function(.invariant, .what = c("mu", "
   names <- c("Location", "Dispersion", "Nu", "Skewness")
   for (i in seq_along(plots)) {
 
-    p1 <- data_plots[[i]][[1]] %>%
-      as.data.frame() %>%
-      tibble::as_tibble() %>%
-      `colnames<-`(factor(round(x_axis_param, 5))) %>%
-      tidyr::pivot_longer(cols = dplyr::everything()) %>%
-      dplyr::mutate_if(is.character, as.numeric) %>%
-      dplyr::mutate(name = scales::percent(.data$name)) %>%
-      dplyr::mutate_if(is.character, as.factor) %>%
+    p1 <- data_plots[[i]][[1]] |>
+      as.data.frame() |>
+      tibble::as_tibble() |>
+      `colnames<-`(factor(round(x_axis_param, 5))) |>
+      tidyr::pivot_longer(cols = dplyr::everything()) |>
+      dplyr::mutate_if(is.character, as.numeric) |>
+      dplyr::mutate(name = scales::percent(.data$name)) |>
+      dplyr::mutate_if(is.character, as.factor) |>
       ggplot2::ggplot(ggplot2::aes(x = .data$value * 100, y = .data$name)) +
       ggridges::geom_density_ridges(scale = 1, stat = "binline", bins = 100, fill = "#03333e") +
       ggplot2::scale_x_continuous(labels = scales::percent_format()) +
@@ -224,17 +230,17 @@ stress_test_univariate_t_distribution_ <- function(.invariant, .what = c("mu", "
 
     p2 <- tibble::tibble(mu           = round(x_axis_param, 5),
                          Bias         = as.vector(data_plots[[i]][[2]]),
-                         Inefficiency = as.vector(data_plots[[i]][[3]])) %>%
-      tidyr::pivot_longer(cols = -mu) %>%
-      dplyr::mutate(mu = scales::percent(mu)) %>%
-      dplyr::mutate_if(is.character, as.factor) %>%
+                         Inefficiency = as.vector(data_plots[[i]][[3]])) |>
+      tidyr::pivot_longer(cols = -mu) |>
+      dplyr::mutate(mu = scales::percent(mu)) |>
+      dplyr::mutate_if(is.character, as.factor) |>
       ggplot2::ggplot(ggplot2::aes(x = .data$mu, y = .data$value * 100, fill = .data$name)) +
       ggplot2::geom_col() +
       ggplot2::scale_y_continuous(labels = scales::percent_format()) +
       ggplot2::labs(subtitle = paste0(names[i], ": average error"),
                     y        = NULL,
                     x        = NULL,
-                    fill     = "Error") +
+                    fill     = "Decomposition") +
       ggplot2::scale_fill_manual(values = c("#03333e", "#9F9573")) +
       ggplot2::theme(legend.position = "bottom")
 

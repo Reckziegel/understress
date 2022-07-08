@@ -6,6 +6,7 @@
 \alias{stress_test_univariate_hyp_distribution.tbl}
 \alias{stress_test_univariate_hyp_distribution.xts}
 \alias{stress_test_univariate_hyp_distribution.matrix}
+\alias{stress_test_univariate_hyp_distribution.numeric}
 \title{Stress-Test the Hyperbolic Distribution}
 \usage{
 stress_test_univariate_hyp_distribution(
@@ -37,6 +38,13 @@ stress_test_univariate_hyp_distribution(
 )
 
 \method{stress_test_univariate_hyp_distribution}{matrix}(
+  .invariant,
+  .what = c("mu", "sigma", "skew"),
+  .simulations = 300,
+  .symmetric = FALSE
+)
+
+\method{stress_test_univariate_hyp_distribution}{numeric}(
   .invariant,
   .what = c("mu", "sigma", "skew"),
   .simulations = 300,

@@ -20,6 +20,8 @@ each series.}
 
 \item{.simulations}{A \code{numeric} scalar. The number of simulations to be
 executed for each level of correlation.}
+
+\item{.nu}{A \code{numeric} scalar. The degrees of freedom.}
 }
 \value{
 A \code{ggplot} object.

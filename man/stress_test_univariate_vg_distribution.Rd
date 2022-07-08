@@ -6,6 +6,7 @@
 \alias{stress_test_univariate_vg_distribution.tbl}
 \alias{stress_test_univariate_vg_distribution.xts}
 \alias{stress_test_univariate_vg_distribution.matrix}
+\alias{stress_test_univariate_vg_distribution.numeric}
 \title{Stress-Test the Variance-Gamma Distribution}
 \usage{
 stress_test_univariate_vg_distribution(
@@ -37,6 +38,13 @@ stress_test_univariate_vg_distribution(
 )
 
 \method{stress_test_univariate_vg_distribution}{matrix}(
+  .invariant,
+  .what = c("mu", "sigma", "lambda", "skew"),
+  .simulations = 300,
+  .symmetric = FALSE
+)
+
+\method{stress_test_univariate_vg_distribution}{numeric}(
   .invariant,
   .what = c("mu", "sigma", "lambda", "skew"),
   .simulations = 300,

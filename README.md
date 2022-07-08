@@ -4,26 +4,35 @@
 # understress
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Reckziegel/understress/workflows/R-CMD-check/badge.svg)](https://github.com/Reckziegel/understress/actions)
 <!-- badges: end -->
 
-The goal of understress is to …
+> Know more about marginal PDFs estimation error
+
+The goal of `understress` is to decompose the estimation error that
+arises from marginal distributions under different correlation
+environments.
+
+By using `understress` the econometrician can better understand where
+the sources of error come from and the size of their impact on current
+models.
 
 ## Installation
 
-You can install the released version of understress from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the development version of `understress` from
+[GitHub](https://github.com/) with:
 
 ``` r
-install.packages("understress")
+# install.packages("devtools")
+devtools::install_github("Reckziegel/understress")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
 ``` r
 library(understress)
-stress_test_multivariate_normal_distribution()
+stress_test_multivariate_normal_distribution(.simulations = 2000)
 #> Cycles To Go: 10 
 #> Cycles To Go: 9 
 #> Cycles To Go: 8 
